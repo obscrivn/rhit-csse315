@@ -1,0 +1,73 @@
+ul.header > li {
+  list-style-type: square;
+}
+
+td {
+  padding:10px;
+  margin:10px;
+}
+
+table.plain, table.plain td {
+  border:none;
+}
+
+table.schedule  {
+  border:2px solid black;
+  border-collapse: collapse;
+}
+
+.schedule th {
+  padding: 5px;
+  background: #ccc;
+}
+
+.schedule td {
+  padding: 5px;
+  background: inherit;
+  border: 1px solid #aaa;
+}
+
+col.firstCol , col.secondCol {
+  background: #eef;
+}
+
+.schedule .break {
+  background: #efe;
+  text-align:center;
+  border: 1px dotted;
+}
+
+.schedule .final {
+  background: #fff;
+  text-align:center;
+  border: 1px dotted;
+}
+
+td.exam {
+  background: #fcc;
+  font-weight:bold;
+}
+
+td.lab {
+  background: rgb(248, 238, 238)
+}
+
+td.presentations {
+  background: #dfe;
+}
+
+td.noclass {
+  background: #eee;
+  color: #777;
+  font-style:italic;
+}
+td.noclass:before {
+  content: "(no class)";
+}
+
+img.mode_icon {
+  height: 1.3em;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
