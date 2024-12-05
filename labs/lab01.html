@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP</title>
+<style>
+    blockquote {
+        border-left: 4px solid #dddddd;
+        padding: 0 15px;
+        color: #777777;
+    }</style>
+</head>
+
+<body>
+    <h1>NLP Lab Assignment 01: Text Preprocessing and Token Analysis</h1>
+    <p><strong>Objective:</strong> In this lab, you will process a text file using Python and regular expressions to:</p>
+    <ul>
+        <li>Preprocess and clean text</li>
+        <li>Extract tokens using regular expressions</li>
+        <li>Count token frequencies</li>
+        <li>Identify and analyze the most frequent tokens</li>
+        <li>Apply thresholds to remove both the most frequent and least frequent tokens</li>
+        <li>Visualize the results with a frequency distribution</li>
+    </ul>
+
+    <h2>Instructions</h2>
+<div>Provide citation for any portion that of the code that you consulted external sources. Note you cannot use genAI to generate solutions. You are ONLY allowed to debug your code and cite appropriately</div>
+    <h3>1. Download the Text File</h3>
+    
+        To get started, download <strong>"Pride and Prejudice"</strong> from Project Gutenberg using the following command:
+        <blockquote> <pre>
+!curl -o lab_text.txt https://www.gutenberg.org/files/1342/1342-0.txt
+        </pre> </blockquote>
+        This will save the file as <code>lab_text.txt</code> in your current working directory. Verify the file by printing its first 10 lines:
+        <blockquote><pre>
+with open("lab_text.txt", "r") as f:
+    for _ in range(10):  # Print the first 10 lines
+        print(f.readline().strip())
+        </pre>
+    </blockquote>
+
+    <h3>2. Extract a Chapter and Save it</h3>
+    <p>The Guttenberg book is long. Your goal is to extract only Preface and remove the front page (see the raw text). Then save the reduced text to a new file that you will be using to process in this Lab</p>
+    <p>The begining of your file should start with "_Walt Whitman has somewhere..." and end with "of the four can come into competition with Elizabeth._".</p>
+    <div>#HINT: your content is read by lines, so you can access the lines using index and then you can extract the right content if you know the starting and ending index, for example: <code>content[25:70]</code></div>
+    See the steps below:
+    <blockquote>
+        <pre>
+         # Extract Preface
+
+         # Save to a File preface.txt (tip - check writelines())
+
+         # Load preface.txt and extract the content
+        </pre>
+    </blockquote>
+
+    
+    <h3>3. Preprocess the Text</h3>
+    <p>Clean the text using regular expressions</p>
+    <p>See <a href="https://www.w3schools.com/python/ref_string_lower.asp">How to conver characters to lower cases</a></p>
+    <blockquote>
+        <pre>
+# import module for regular expressions and string manipulation
+
+# join lines
+
+# Remove extra spaces, new lines, strip trailing spaces
+
+# Convert to lower cases
+
+# remove punctuation. Note use re.sub
+
+        </pre>
+    </blockquote>
+
+    <h3>3. Tokenize the Text</h3>
+    <p>Extract tokens using regular expressions:</p>
+    <blockquote>
+        <pre>
+# Tokenize - split into words
+
+# Print the first 10 tokens
+
+        </pre>
+    </blockquote>
+
+    <h3>4. Count Token Frequencies</h3>
+    <p>Count the frequency of each token using <code>collections.Counter</code></p>
+    <p>The Counter class from Python's collections module is a specialized dictionary designed for counting hashable objects. It is useful for tasks like, counting occurrences, finding the most common elements etc.</p>
+
+<h4>Counting occurrences of elements in a list</h4> 
+<div>See examples below and also see <a href="https://ioflood.com/blog/python-counter-quick-reference-guide/">Reference</a></div>
+<blockquote>
+<pre>
+from collections import Counter
+# Example list
+data = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']
+            
+# Count occurrences
+fruit_counts = Counter(data)
+print(fruit_counts)
+</pre>
+Output:
+<pre>Counter({'apple': 3, 'banana': 2, 'orange': 1})</pre>
+</blockquote>
+<h4>Finding the most common elements </h4> 
+<blockquote>
+<pre>
+# Find the 2 most common elements
+most_common = fruit_counts.most_common(2)
+print(most_common)
+</pre>
+</blockquote>
+<p>Here is your code</p>
+<blockquote>
+    <pre>
+
+# Create token_counts using Counter
+
+# Display the total of all tokens. HINT: you have created a dictionary collection of all words and their frequencies. Can you think of a way to add all values?
+
+# Display how many unique tokens in the dictionary. HINT: your dictionary keys must be unique. Can you think of how to access the size of dictionary?
+
+# Display the most common 10 tokens (see examples) 
+</pre>
+</blockquote>
+
+    <h3>5. Apply Thresholds</h3>
+    <p>Apply a threshold to filter tokens:</p>
+<ul>
+    <li>Upper Threshold: Remove the top 5 most frequent tokens</li>
+    <li>Lower Threshold: Remove tokens that appear fewer than 3 times</li>
+    <li>Display the number of tokens remaining after applying thresholds</li>
+</ul>    
+
+Part of the code is provided:
+    <blockquote>
+        <pre>
+# Remove top 5 most frequent tokens
+top_5 = [token for token, _ in token_counts.____________]
+filtered_tokens = {token: count for token, count in token_counts.items() if token not in top_5}
+
+# Remove tokens that appear fewer than 3 times
+filtered_tokens = {token: count for token, count in filtered_tokens.items() if count >= 3}
+
+# Pring the size of new tokens
+print("Tokens after filtering:", _____________)
+        </pre>
+    </blockquote>
+
+    <h3>6. Visualize the Token Frequency Distribution</h3>
+    <p>Create bar plots to visualize the token distributions before and after applying thresholds (Code provided)</p>
+    <blockquote>
+        <pre>
+import matplotlib.pyplot as plt
+
+def plot_token_distribution(token_counts, title):
+    sorted_tokens = sorted(token_counts.items(), key=lambda x: x[1], reverse=True)
+    tokens, counts = zip(*sorted_tokens[:20])  # Top 20 tokens
+    plt.figure(figsize=(10, 6))
+    plt.bar(tokens, counts)
+    plt.xticks(rotation=45, ha='right')
+    plt.title(title)
+    plt.xlabel("Tokens")
+    plt.ylabel("Frequency")
+    plt.show()
+
+# Plot original distribution
+plot_token_distribution(token_counts, "Original Token Frequency Distribution")
+
+# Plot filtered distribution
+plot_token_distribution(filtered_tokens, "Filtered Token Frequency Distribution")
+        </pre>
+    </blockquote>
+    <h3>Reflection</h3>
+    <p>Provide your reflection on word frequencies - anything surprising from the distribution plot?</p>
+    <h3>Grading Rubric (100 Points)</h3>
+    <ul>
+        <li>File Handling and Preprocessing (20 Points)</li>
+        <li>Tokenization (20 Points) </li>
+        <li>Token Frequency Analysis (20 Points)</li>
+        <li>Threshold Application (20 Points)</li>
+        <li>Visualization+ reflections (10 Points)</li>
+        <li>Code Readability and Comments (10 Points)</li>
+    </ul>
+</body>
+</html>
