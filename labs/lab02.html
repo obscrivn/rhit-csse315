@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Lab Assignment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>NLP Lab Assignment 02: Text Processing for Classification Task</h1>
+    <p><strong>Objective:</strong> In this lab, you will get familiar with HuggingFace core library and learn how to:</p>
+    <ul>
+        <li>Load HuggingFace datasets</li>
+        <li>Convert datasets to dataframe</li>
+        <li>Learn about DistilBERT model</li>
+        <li>Convert text to tokens</li>
+    </ul>
+
+    <h2>Instructions</h2>
+    <div>Provide citation for any portion that of the code that you consulted external sources. Note you cannot use genAI to generate solutions. You are ONLY allowed to debug your code and cite appropriately</div>
+    <p>Make sure to answer any questions marked as QUESTION (in bold)</p>
+
+    <section>
+    <h3>1. Overview</h3>
+    <p>Text classification is one of the most common tasks in NLP; it can be used for a broad range of applications, such as tagging customer feedback into categories or routing 
+        support tickets according to their language.</p>
+        <p>Did you know that sentiment analysis is also a type of text classification? It assigns the polarity of a given text</p>
+    <p>Scenario: imagine that you are a NLP scientist who needs to build a system that can automatically identify emotional states such as "anger" or "joy" that people express about your company's product on social media posts.</p>
+    <img src="https://raw.githubusercontent.com/nlp-with-transformers/notebooks/0cb211095b4622fa922f80fbdc9d83cc5d9e0c34/images/chapter02_tweet.png" height="200px">
+    <div>Our Pipeline:</div>
+    <img src="https://raw.githubusercontent.com/nlp-with-transformers/notebooks/0cb211095b4622fa922f80fbdc9d83cc5d9e0c34/images/chapter02_hf-libraries.png" height="100px">
+
+    </section>
+<section>
+    <h3>2. Dataset</h3>
+    <ol>
+   <li> <p>We will download the data from the Hugging Face Hub. We can use the <pre>list_datasets()</pre> function to see what datasets are available on the Hub:</p></li>
+<pre><code># TODO: Install dependencies and modules
+!pip install transformers datasets # ignore pip error message
+from datasets import load_dataset
+emotions = load_dataset("emotion")
+</code></pre>
+<li><p> Take a look at the emotion dataset details by printing its name</p></li>
+<p><strong>QUESTION 1: What is the proportion between training, testing, and validation sets? Define as %, for example 30%-20%-50%</strong></p>
+
+<li><p>Extract training dataset </p></li>
+<pre><code> # TODO:
+train_ds = emotions["train"]
+</code></pre>
+<li><p>1) Calculate the length dataset, 2) access its first element. HINT: treat it like an array.  </p></li>
+<pre><code> # TODO:
+# Dataset length
+# Dataset first element
+    </code></pre>
+<li><p>Let's look at its features: </p></li>
+    <pre><code> # TODO:
+train_ds.column_names
+print(train_ds.features)
+</code></pre>
+<p><strong>QUESTION 2: Name class Labels</strong></p>   
+<li><p>Like with arrays/lists we can access several rows </p></li>
+    <pre><code> # TODO:
+print(train_ds[:5]) # take a look at how labels are represented
+print(train_ds["text"][:5]) # you can access text only (without labels)
+</code></pre>
+</ol>
+</section>
+<section>
+<h3>3. From Dataset to DataFrame</h2>
+    <ol>
+<li>we need pandas library to convert dataset to dataframe. You should see 2 columns: labels and text</li>
+<pre><code> # TODO:
+import pandas as pd
+emotions.set_format(type="pandas")
+df = emotions["train"][:]
+df.head()
+</code></pre>
+<li>Let's map labels from digit to their corresponding text names. For this we will create a new column to store these values mapped from an integer label (e.g., 0, 1, 2) into its corresponding string label (e.g., "happy", "sad", "angry")</li>
+<pre><code> # TODO:
+# function to extract values from the column label using the method integer-to-string
+def label_int2str(row): 
+    return emotions["train"].features["label"].int2str(row)
+
+df["label_name"] = df["label"].apply(label_int2str)
+df.head()
+</code></pre>
+    </ol>
+
+</section>
+<section>
+<h3>Class Distribution</h3>
+<ol>
+    <li>Plot Class Distribution. Replace [column name] with the name you created in 3.2</li>
+    <pre><code> 
+# TODO:
+import matplotlib.pyplot as plt
+
+df["COLUMN NAME"].value_counts(ascending=True).plot.barh()
+plt.title("Frequency of Classes")
+plt.show()
+</code></pre>
+<p><strong>QUESTION 3: Which label is the most frequent? Is data balanced?</strong></p>  
+</ol>
+</section>
+<section>
+<h3>From Text to Tokens</h3>
+<ol>
+    <li>First we need to reset format from dataframe back to dataset</li>
+<pre><code> 
+# TODO:
+emotions.reset_format()
+</code></pre>
+<li> Review the In-Class Lab: use "distilbert-base-uncased" as your pretrained tokenizer </li>
+<pre><code> 
+# TODO:
+# import
+# create tokenizer 
+tokenizer = # make sure to keep this name
+text = "Tokenizing text is a core task of NLP."
+# tokenize the sample text (above) for testing purpose 
+</code></pre>
+<li>Convert tokens to ids</li>
+<pre><code> 
+# TODO:
+# convert tokens to IDS
+    </code></pre>
+<li>Print tokenizer vocabulary size</li>
+    <pre><code> 
+# TODO:
+# vocabulary size
+</code></pre>
+<li>Tokenize the whole dataset. First, we need a processing function. 
+    Note new options that are used with tokenizer. See <a href="https://huggingface.co/transformers/v3.0.2/preprocessing.html" target="_blank">Documentation</a>. padding=True will pad the examples with zeros to the size of the longest one in a batch, and truncation=True 
+    will truncate the examples to the model's maximum context size </li>
+    <pre><code> 
+# TODO:
+def tokenize(batch):
+    return tokenizer(batch["text"], padding=True, truncation=True)
+</code></pre>
+<p>Let's look at the example: the first element of input_ids is shorter 
+    than the second, so zeros have been added to that element to make them the same length. 
+    These zeros have a corresponding [PAD] token in the vocabulary</p>
+<pre><code>
+#TODO
+print(tokenize(emotions["train"][:2]))
+</code></pre>
+<li>Apply batch tokenizer using map(). Because we've set batch_size=None, our tokenize() function 
+    will be applied on the full dataset as a single batch</li>
+<pre><code>
+#TODO
+emotions_encoded = emotions.map(tokenize, batched=True, batch_size=None)
+</code></pre>
+<li>Pring input ids from the train subset for the first item (see earlier in the lab how we can access train subset and how to access the column. Note you only need to access the first element of the train subset.</li>
+<pre><code>
+#TODO
+# print input ids
+    </code></pre>
+<li>Describe one the most insteresting thing you learned from this lab:</li>
+</ol>
+</section>
+
+</body>
+</html>
