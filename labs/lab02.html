@@ -35,8 +35,9 @@
     </section>
 <section>
     <h3>2. Dataset</h3>
+    <p>Hugging Face’s Datasets module offers an effective method for loading and processing NLP datasets. Take a look at the library: <a href="https://huggingface.co/datasets" target="_blank">https://huggingface.co/datasets</a></p>
     <ol>
-   <li> <p>We will download the data from the Hugging Face Hub. We can use the <pre>list_datasets()</pre> function to see what datasets are available on the Hub:</p></li>
+   <li> <p>We will download the emotion data from the Hugging Face Hub. </p></li>
 <pre><code># TODO: Install dependencies and modules
 !pip install transformers datasets # ignore pip error message
 from datasets import load_dataset
@@ -101,7 +102,7 @@ df["COLUMN NAME"].value_counts(ascending=True).plot.barh()
 plt.title("Frequency of Classes")
 plt.show()
 </code></pre>
-<p><strong>QUESTION 3: Which label is the most frequent? Is data balanced?</strong></p>  
+<p><strong>QUESTION 3: Which label (e.g. joy, surprise) is the most frequent? Is data balanced in your opinion? Take a close look at the counts of each label - would it matter if the labels used in training have different frequency?  </strong></p>  
 </ol>
 </section>
 <section>
