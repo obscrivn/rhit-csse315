@@ -1,0 +1,82 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>CSSE 315</title>
+    
+    
+    <link rel="stylesheet" type="text/css" href="./resources_files/screen.css">
+    <link rel="stylesheet" type="text/css" href="./resources_files/schedule.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .lab-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            padding: 1.5rem;
+            width: 300px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .lab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .lab-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .lab-card p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .lab-card a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background-color: #474949;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .lab-card a:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+    <body>
+    
+        <div id="header">
+            <a id="index_link" href="./index.html">CSSE 315</a>
+            <a id="syllabus_link" href="./syllabus.html">Syllabus</a>
+            <a id="schedule_link" href="./schedule.html">Schedule</a>
+            <a id="quiz_link" href="./worksheets.html">Worksheets/Quizzes</a>
+            <a id="quiz_link" href="./labs.html">Labs</a>
+            <a id="resources_link" href="./resources.html">Resources</a>
+            <div style="clear:both;"></div>
+    </div>
+    
+    <div id="content">
+    
+        <h1>Lab Assignments</h1>
+    <main>
+        <!-- Lab 1 -->
+        <div class="lab-card">
+            <h2>Lab 01: Text Preprocessing and Token Analysis</h2>
+            <p>In this lab, you will learn the basics of string processing in Python.</p>
+            <a href="./labs/lab01.html" target="_blank">View Lab</a>
+        </div>
+
+        <!-- Lab 2 -->
+        <div class="lab-card">
+            <h2>Lab 02: Text Tokenization for Classification Task</h2>
+            <p>In this lab, you will learn how to word with pre-trained subword tokenizer and HuggingFace datasets.</p>
+            <a href="./labs/lab02.html" target="_blank">View Lab</a>
+        </div>
+    </main>
+</body>
+</html>
