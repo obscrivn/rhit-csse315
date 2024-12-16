@@ -6,10 +6,10 @@ h3, h4 {
 margin-bottom: -0.06em;
 }
 
-a:link , a:visited {
+/* a:link , a:visited {
 background: none;
 color: #966;
-}
+} */
 
 body {
 font-family: Helvetica, Arial, sans-serif;

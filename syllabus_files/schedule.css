@@ -70,5 +70,44 @@ img.mode_icon {
   vertical-align: middle;
   margin-right: 6px;
 }
-</style>
 
+.slides {
+  color: #704bdf;
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 2px solid #3d3c3a;
+}
+
+.slides:hover {
+  color: #452e49; /* Slightly darker yellow */
+  border-bottom: 2px solid #3d3c3a;
+}
+
+.quiz {
+  color: #da4b4b; /* Evaluative purple */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.quiz:hover {
+  color: #ee5c5e; /* Slightly brighter purple */
+  border-bottom: 2px solid #934b4c;
+}
+.lab {
+  color: #00C853;
+  font-weight: bold;
+  background-color: #E8F5E9; /* Light green background */
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.worksheet {
+  color: #8E44AD; /* Evaluative purple */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.worksheet:hover {
+  color: #9B59B6; /* Slightly brighter purple */
+  border-bottom: 2px solid #9B59B6;
+}
