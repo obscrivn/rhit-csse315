@@ -7,6 +7,108 @@
 <link rel="stylesheet" type="text/css" href="./worksheets_files/screen.css">
 <link rel="stylesheet" type="text/css" href="./worksheets_files/schedule.css">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        /* display: flex; */
+        margin: 20px;
+    }
+    .schedule-container {
+            width: auto; /* Adjust the container width based on the content */
+            max-width: 80%; /* Ensure it doesn't get too wide */
+            /* margin: 0 auto; Center the container */
+        }
+    .schedule {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 1em;
+        text-align: left;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule thead {
+        background-color: #f4f4f4;
+    }
+
+    .schedule th, .schedule td {
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+
+    .schedule th {
+        background-color: #4a5765;
+        color: white;
+        font-weight: bold;
+    }
+
+    .schedule tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .schedule td:first-child {
+            width: 20%; /* Wider for the first column */
+        }
+
+        .schedule td:nth-child(2), 
+        .schedule td:nth-child(3) {
+            width: 10%; /* Equal width for other columns */
+        }
+    .schedule tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .schedule .no-solution {
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    .schedule .solution-tbp {
+        color: #FF9900;
+        font-style: italic;
+    }
+
+    .schedule .solution-tbp a {
+    color: #FF9900;
+    font-style: italic;
+    text-decoration: none; /* Optional: Remove underline */
+}
+
+    /* @media (max-width: 768px) {
+        .schedule {
+            font-size: 0.9em;
+        }
+        .schedule th, .schedule td {
+            padding: 8px;
+        }
+    } */
+    @media (max-width: 480px) {
+            .schedule, .schedule thead, .schedule tbody, .schedule th, .schedule td, .schedule tr {
+                display: block;
+                text-align: left;
+            }
+            /* .schedule tr {
+                margin-bottom: 10px;
+            } */
+
+            .schedule th, .schedule td {
+                text-align: left;
+                padding: 6px; 
+            }
+
+
+
+            .schedule td {
+                border: none; 
+                position: relative;
+                /* padding-left: 50%; */
+                text-align: left;
+            }
+
+
+        }
+
+</style>
 </head>
 <body>
     <div id="header">
@@ -24,62 +126,62 @@
 <h2> Quizzes </h2>
 
 
-<div id="quiz_node">
+<div class="schedule-container"> <!-- id="quiz_node"> -->
+    <div style="font-style: italic; font-size: small;"><p>Quiz solutions are usually posted 1 week after submisison.</p> <p>Solutions to worksheets are not posted as it is a classroom activity.</p></div>
     <table class="schedule">
         <colgroup>
             <col class="firstCol">
             <col>
         </colgroup>
+        <thead>
         <tr>
-            <th colspan="1">Quizzes</th>
+            <th colspan="1">Type</th>
             <th>Original</th>
             <th>Solution</th>
         </tr>
+    </thead>
         <!-- Week 1 -->
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+         <tbody>
+
         <tr>
             <td>Worksheet01</td>
             <td><a href="./worksheets_files/Worksheet01.pdf" target="_blank">Link</a></td>
-            <td></td>
+            <td class="no-solution"></td>
         </tr>
         <tr>
             <td>Quiz01</td>
             <td></td>
-            <td>Solution(TBP)</td>
+            <td class="solution-tbp"><a href="./worksheets_files/quiz01.pdf">Solution Quiz01</a></td>
         </tr>
         <tr style="border-top: thick solid black;">
             <td>Worksheet02</td>
             <td><a href="./worksheets_files/worksheet02.pdf" target="_blank">Link</a></td>
-            <td></td>
+            <td class="no-solution"></td>
         </tr>
         <tr>
             <td>Worksheet03</td>
             <td><a href="./worksheets_files/worksheet03.pdf" target="_blank">Link</a></td>
-            <td></td>
+            <td class="no-solution"></td>
         </tr>
         <tr>
             <td>Quiz02</td>
-            <td><a href="./worksheets_files/quiz02.pdf" target="_blank">Quiz02 Link</a></td>
-            <td></td>
+            <td><a href="./worksheets_files/quiz02.pdf" target="_blank">Link</a></td>
+            <td class="solution-tbp"><a href="./worksheets_files/quiz02.pdf" target="_blank">Solution Quiz02</a></td>
         </tr>
         <tr style="border-top: thick solid black;">
             <td>Worksheet04</td>
             <td><a href="./worksheets_files/worksheet04.pdf" target="_blank">Link</a></td>
-            <td></td>
+            <td class="no-solution"></td>
         </tr>
         <tr>
             <td>Worksheet05</td>
             <td><a href="./worksheets_files/worksheet05.pdf" target="_blank">Link</a></td>
-            <td></td>
+            <td class="no-solution"></td>
         </tr>
         <tr>
             <td>Quiz03</td>
             <td></td>
-            <td></td>
+            <td class="solution-tbp"><a href="./worksheets_files/quiz03.pdf" target="_blank">Solution Quiz03</a></td>
         </tr>
         <tr style="border-top: thick solid black;">
             <td>Worksheet07</td>
@@ -156,6 +258,7 @@
             <td></td>
             <td></td>
         </tr>
+    </tbody>
     </table>
 </div>
 </div>
