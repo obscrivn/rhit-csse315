@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>CSSE 315</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../syllabus_files/screen.css">
+    <link rel="stylesheet" type="text/css" href="../syllabus_files/schedule.css">
+    <style>
+        th {
+            position: sticky; /* Makes the header row fixed */
+            top: 0; /* Keeps the header at the top of the scrolling container */
+            background-color: #f4f4f4; /* Add a background color to distinguish the header */
+            z-index: 1; /* Ensures the header stays above table content */
+        }
+        </style>
+</head>
+    <body>
+    <div id="header">
+            <a id="index_link" href="../index.html">CSSE 315</a>
+            <a id="syllabus_link" href="../syllabus.html">Syllabus</a>
+            <a id="schedule_link" href="../schedule.html">Schedule</a>
+            <a id="quiz_link" href="../worksheets.html">Worksheets/Quizzes</a>
+            <a id="quiz_link" href="../labs.html">Labs</a>
+            <a id="resources_link" href="../resources.html">Resources</a>
+            <div style="clear:both;"></div>
+        </div>
+    
+    <div id="content" style="width: 100%; max-width: 100%;">
+        <h1>Homework 1: Text Retrieval with RAG and Vector Database </h1>
+
+ <p>This assignment showcases how an NLP engineer would integrate pretrained models, vector databases, and generative text models 
+    to build a question-answering or semantic search system. </p>
+    
+    <p>This approach is highly applicable in real-world use cases like customer support automation, 
+    enterprise document search, educational Q&A, and more. You will be able to apply skills you learned from the previous Labs.</p>
+   
+        <h2>Objectives</h2>
+        
+        <p>By the end of this homework (individual), you will be able to:</p>
+        <ol>
+          <li>Clean and preprocess raw text data (e.g., removing HTML tags).</li>
+          <li>Generate <strong>semantic embeddings</strong> for documents using a <strong>Sentence Transformer</strong> model.</li>
+          <li>Store and retrieve embeddings from a <strong>vector database</strong> (ChromaDB).</li>
+          <li>Build a basic <strong>Retrieval-Augmented Generation (RAG)</strong> pipeline.</li>
+          <li>Experiment with <strong>prompt engineering</strong> and <strong>inference parameters</strong> for text generation.</li>
+          <li>Compare outputs from two different generative models (Google GenAI and a Hugging Face model).</li>
+        <li>Submission: Colab URL</li>
+        </ol>
+        
+        <hr />
+    <section> 
+        <h2>Section 1: Data Collection & Preprocessing</h2>
+<ol>
+  <li><p><strong>Obtain or load</strong> a small dataset of HTML documents. Example, consider you are building a search engine for Rose students to find relevant information about campus.</p></li>
+  <li><p><strong>Clean and preprocess</strong> the text: write a simple function that uses a regex pattern to remove HTML tags. Note you do not have to clean stop words or punctuation, only HTML tags</p></li>
+  <li><p>Create a corpus with these documents (consult the Lab04)</p></li>
+</ol>
+</section>
+
+<section>
+    <h2>Section 2: Embedding Model Selection</h2>
+    <p>Note: In this homework, you are manually computing the embeddings. In the Lab04, you used a custom “GeminiEmbeddingFunction” to embed text automatically within Chroma.</p>
+    <h3>Sentence Transformers</h3>
+        <p>You will be using a SentenceTransformer (such as <strong>all-MiniLM-L6-v2</strong> in the Sentence Transformers library) rather than a raw BERT or DistilBERT model. Sentence Tranformer is often preferred for semantic similarity tasks because it is specifically fine-tuned and optimized 
+            to produce vector representations (embeddings).</p>
+        
+        <p>Modern transformer models (like Sentence Transformers) use subword tokenization (e.g., Byte-Pair Encoding or WordPiece) that can handle uppercase, 
+            punctuation, and other text variations.</p>
+        
+        <p>In classical NLP pipelines, you’d often remove stopwords or apply stemming/lemmatization. That is not typically recommended for transformer-based embeddings.</p>
+        
+        <p>Model:<a href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2" target="_blank">
+        Read how to implement</a></p>
+    
+    <ol>
+      <li><p>Install sentence transformer (read the model documentation)</p></li>
+      <li><p>Make sure to add HF_TOKEN with your HugginfFace secret Key to colab environment. Note - with HuggingFace token - that is all you need, no additional code required</p></li>
+      <li><p>Generate embeddings. For simplicity, call them embeddings</p></li>
+      <li><p>Print length of embeddings for the first document</p></li>
+    <li><p>what is the dimention and is it sparse or dense? Read from the model documentation</p></li>
+    </ol>
+
+</section>
+<section>
+<h2>Section 3: Generating & Storing Embeddings in ChromaDB</h2>
+<p>This time, we will simply pass the vector embeddings directly to Chroma.</p>
+<ul>
+    <li>Vector DB: We will use Chroma from Lab04</li>
+    <li>Install and import chromadb</li>
+    <li>Initialize Client without providing any embedding function</li>
+    <li>Index Embeddings: Convert each document/chunk into an embedding vector</li>
+    <li>Store (text, embedding, metadata) in the database</li>
+</ul>
+<p>In the previous Lab04, you used:
+<code><pre>
+    db = chromadb.Client().get_or_create_collection(
+        name="my_collection",
+        embedding_function=GeminiEmbeddingFunction()
+    )
+</pre></code></p>
+<p>   This time, we will use:
+<code><pre>    
+    collection_name = "my_collection"
+    db = chromadb.Client().get_or_create_collection(name=collection_name)
+</pre></code></p>
+  <p>Note: Chroma defaults to storing data in memory only - we do not store it on disk.
+    
+    If interested, read <a href="https://medium.com/@pierrelouislet/getting-started-with-chroma-db-a-beginners-tutorial-6efa32300902 " >the following documentation.</a>   </p>  
+
+
+</p>
+    <ol>
+  <li><p><strong>Create</strong> a Chroma client and a collection. Do not provide an <code>embedding_function</code> to Chroma, because <strong>you already have embeddings</strong>.</p></li>
+  <li><p>Add documents, IDS, embeddings. Note in the Lab04 you only added documents and ids.</p></li>
+      <li><p>Confirm that the data is inserted and also peek at the data to ensure that you have a document (cleaned text), embeddings, and custom IDs.</p></li>
+</ol>
+</section>
+<section>
+    <h2>Section 4: Retrieval Function</h2>
+    <p>We are not using an internal embedding function here
+        You will need to create embeddings for the query first (using the same model) 
+        and then pass that embedding to <db class="query:">
+            <code><pre>
+                your_query = "your question"
+                query_embedding =# the same model encoding you applied to documents
+                results = db.query(query_embedding, n_results=1)
+            </pre></code>
+        </db></p>
+    <ol>
+      <li><p>Create your query</p></li>
+        <li><p>Compute the query embedding</p></li>
+          <li><p>Call <code>db.query</code>. You can use n_results=1 to get top match</p></li>
+          <li><p>Print the retrieved document to confirm correctness.</p></li>
+
+
+    </ol>
+
+</section>
+<section>
+<h2>Section 5: Retrieval-Augmented Generation (RAG)</h2>
+<p>Now you want an answer instead of just retrieved documents (see Lab04).</p>
+
+<p>Provide it to a language model via a prompt, e.g.:
+<code><pre>
+Passage: {retrieved_content}
+
+Question: {user_query} 
+</pre></code>
+</p>
+<ol>
+<li><p>First, use the same model as in Lab04 (remember to connect to Google API</p></li>
+<li><p>Next, use a generative model from huggingface to produce a final answer with the retrieved context</p></li>
+<ul>
+<li><p>A good, lightweight choice for instruction-based or question-answering tasks is <code>google/flan-t5-base</code></p></li>
+<li><p>Use transformer pipeline you learned from your datacamp lab</p></li>
+<li><p>Use task 'text2text-generation'</p></li>
+</ul>
+</ol>
+<ol>
+
+  <li><p><strong>Construct</strong> a prompt that includes the context, the question, and instructs the model to answer.</p></li>
+  <li><p><strong>Pass</strong> the prompt to a generative model:</p>
+    <ul>
+      <li><strong>Google GenAI model</strong> (from Lab04)</li>
+      <li>A <strong>Hugging Face</strong> model using <code>pipeline("text2text-generation")</code> </li>
+    </ul>
+    <li><p>Print results for both models</p></li>
+  </li>
+  
+</ol>
+</section>
+
+<section>
+    <h2>Section 6: Parameter & Prompt Tuning</h2>
+    <p>Prompt Engineering: Try different styles (“You are a helpful assistant,” bullet points, etc.)</p>  
+
+      <p>Inference Parameters: Adjust temperature, etc. to control the generation style and length</p>
+<h3>Prompt Structuring Tips</h3>
+<ul>
+   <li>System/Role Prompt: E.g., “You are a helpful assistant with expertise in car manuals.” This frames the response style</li>
+  <li>Explicit Instructions: E.g., “Answer succinctly in 1–2 sentences.” or “Provide a step-by-step explanation.”</li>
+  <li>Few-Shot Examples: Provide 1–2 Q&A examples in the prompt so the model sees how you want the answer formatted or reasoned</li>
+</ul>
+  
+</section>
+<section>
+<h2>Section 7: Reflection & Citations</h2>
+
+<ol>
+ <li><p>   Summarize your pipeline, observations, and any key findings</p></li>
+ <li><p>  What did you learn? What did you find particularly useful/interesting</p></li>
+ <li><p>  Provide references to any documentation you used. Also provide URL to the HTML documents you used</p></li>
+
+</ol>
+</section>
+
+<h3>Grading Rubric (100 Points)</h3>
+<ul>
+    <li>Data processing (10 Points)</li>
+    <li>Embedding (15 Points)</li>
+    <li>Chroma (20 Points)</li>
+    <li>Retrieval (15 Points)</li>
+    <li>RAG (15 Points)</li>
+    <li>Tuning (15 Points)</li>
+    <li>Reflections (10 Points)</li>
+</ul>
+
+</div>
+
+    </body>
+    </html>
