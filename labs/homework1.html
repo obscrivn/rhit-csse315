@@ -30,8 +30,20 @@
         <h1>Homework 1: Text Retrieval with RAG and Vector Database </h1>
 
  <p>This assignment showcases how an NLP engineer would integrate pretrained models, vector databases, and generative text models 
-    to build a question-answering or semantic search system. </p>
-    
+    to build a question-answering or semantic search system. Below is the example but you can modify the scenario to fit your needs/interests</p>
+
+    <h3><strong>Scenario</strong>: You Are Hired as an NLP Engineer at Rose-Hulman</h3>
+
+    <p><strong>Context: </strong>
+Rose-Hulman wants an AI assistant to answer questions about their course offerings, degree requirements, and campus events. 
+The AI assistant should pull relevant information from the school’s Course Catalog page and be able to respond to user queries such as:</p>
+<ul>
+<li>What are the prerequisites for ECE 300?</li>
+<li>Which courses are offered in Spring for Computer Engineering majors?</li>
+<li>When is the next networking event for CS students?</li>
+</ul>
+<p><strong>Your Role: </strong> Fetch the HTML content from the official Rose-Hulman website (e.g., the Course Catalog URL). 
+Strip out HTML tags to get “plain text” suitable for NLP. Build a retrieval mechanism: given a user question, find the most relevant information.</p>
     <p>This approach is highly applicable in real-world use cases like customer support automation, 
     enterprise document search, educational Q&A, and more. You will be able to apply skills you learned from the previous Labs.</p>
    
@@ -52,7 +64,8 @@
     <section> 
         <h2>Section 1: Data Collection & Preprocessing</h2>
 <ol>
-  <li><p><strong>Find</strong> HTML documents. Example, consider you are building a search engine for Rose students to find relevant information about campus. See HINT below.</p></li>
+  <li><p>Identify your business scenario - what is your task (see an example above)</p></li>
+    <li><p><strong>Find</strong> HTML documents. Example, consider you are building a search engine for Rose students to find relevant information about campus. See HINT below.</p></li>
   <li><p><strong>Clean and preprocess</strong> the text: write a simple function that uses a regex pattern to remove HTML tags. 
     Note you do not have to clean stop words or punctuation, only HTML tags</p></li>
   <li><p>Create a corpus with these documents (consult the Lab04)</p></li>
