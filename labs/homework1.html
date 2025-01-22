@@ -52,10 +52,12 @@
     <section> 
         <h2>Section 1: Data Collection & Preprocessing</h2>
 <ol>
-  <li><p><strong>Obtain or load</strong> a small dataset of HTML documents. Example, consider you are building a search engine for Rose students to find relevant information about campus.</p></li>
-  <li><p><strong>Clean and preprocess</strong> the text: write a simple function that uses a regex pattern to remove HTML tags. Note you do not have to clean stop words or punctuation, only HTML tags</p></li>
+  <li><p><strong>Find</strong>HTML documents. Example, consider you are building a search engine for Rose students to find relevant information about campus. See HINT below.</p></li>
+  <li><p><strong>Clean and preprocess</strong> the text: write a simple function that uses a regex pattern to remove HTML tags. 
+    Note you do not have to clean stop words or punctuation, only HTML tags</p></li>
   <li><p>Create a corpus with these documents (consult the Lab04)</p></li>
 </ol>
+<p><strong>Do not use beatifulsoup library in python</strong>. You need to use regular expressions to clean your html tags</p>
 <p>HINT on using URLs: first select your HTML page, example https://www.rose-hulman.edu/academics/course-catalog/current/programs/Computer%20Engineering/course-descriptions.html</p>
 <p>Import the library <code>requests</code>. See Documentation how to <code>get</code> the content and how to extract the raw html: <a href="https://www.w3schools.com/python/module_requests.asp"tagret="_blank">Module requests</a>  </p>
 <p>Note - find at least three HTML sources for your tasks that you want users to be able to use to retrieve the information</p>
