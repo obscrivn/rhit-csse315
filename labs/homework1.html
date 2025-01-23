@@ -171,6 +171,9 @@ Question: {user_query}
 <li><p>Next, use a generative model from huggingface to produce a final answer with the retrieved context</p></li>
 <ul>
 <li><p>A good, lightweight choice for instruction-based or question-answering tasks is <code>google/flan-t5-base</code></p></li>
+<li><p>If this model is too small for your text and prompt size. Try the following models
+    <code>model="google/flan-ul2"</code>, or <code>model="google/long-t5-tglobal-base"</code>. See <a href="https://huggingface.co/google/long-t5-tglobal-base" ></a>documentation  
+</p></li>
 <li><p>Use transformer pipeline you learned from your datacamp lab</p></li>
 <li><p>Use task 'text2text-generation'</p></li>
 </ul>
