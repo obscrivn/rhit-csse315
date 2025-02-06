@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Lab Assignment</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+
+          margin: 2em;
+
+        }
+        
+        
+        
+      </style>
+</head>
+<body>
+    <div id="content">
+        <h1>NLP Lab Assignment 05: Building an AI Agent with Database Function Calling</h1>
+        <p><strong>Objective:</strong> In this lab, you will get familiar with Ai agents and learn how to:</p>
+    <ul>
+        <li>Create a mini-database</li>
+        <li>Define query functions</li>
+        <li>Use function calling with LLM</li>
+    </ul>
+    <section>
+        <h2 class="section-title">Background on Python Type Annotations</h2>
+        <p>
+          In Python, you may see function definitions that look like this:
+        </p>
+        <pre><code>def execute_query(sql: str) -> list[list[str]]:
+        </code></pre>
+        <p>
+          The <strong><em>(sql: str)</em></strong> part tells us that <code>sql</code> should be a string, and the <strong><em>-&gt; list[list[str]]</em></strong> part tells us that the function will return a list of lists of strings. These type hints do not enforce types at runtime (by default), but they help with readability, IDE autocompletion.
+        </p>
+        <p>
+          While you can still define the same function without type hints, for example:
+        </p>
+        <pre><code>def execute_query(sql):
+            # function body
+            return ...
+        </code></pre>
+        <p>
+          However, for this lab, please use the type annotation style because it is helpful for function calling interfaces with LLMs (it clarifies what the function expects and returns).
+        </p>
+      </section>
+
+    <h2>Instructions</h2>
+        <p>Create a new Notebook. Make sure to provide sections and subsection titles</p>
+      
+        <section>
+          <h3>Section 1: Create Your Own Database (20 points)</h3>
+          <ol>
+            <li>
+              <p><strong>Choose a scenario</strong> that interests you (e.g., library, restaurant, or university database).</p>
+            </li>
+            <li>
+              <p><strong>Create a local SQLite database</strong> (e.g., <code>my_scenario.db</code>) and connect to it using the <code>%sql</code> extension.</p>
+            </li>
+            <li>
+              <p><strong>Define at least two or three tables</strong> relevant to your scenario (e.g., <code>orders</code>, <code>products</code>, <code>staff</code>).</p>
+            </li>
+            <li>
+              <p><strong>Insert sample data</strong> into each table (at least 5–10 rows per table).</p>
+            </li>
+          </ol>
+          <p><strong>Deliverables:</strong> A short description of your scenario, plus the SQL code creating the tables and inserting data.</p>
+        </section>
+      
+        <section>
+          <h3>Section 2: Defining and Testing the Functions (20 points)</h3>
+          <ol>
+            <li>
+              <p><strong>Implement three Python functions</strong> with type annotations and docstrings:</p>
+              <ul>
+                <li><code>list_tables() -&gt; list[str]</code></li>
+                <li><code>describe_table(table_name: str) -&gt; list[tuple[str, str]]</code></li>
+                <li><code>execute_query(sql: str) -&gt; list[list[str]]</code></li>
+              </ul>
+            </li>
+            <li>
+              <p>Ensure each function prints a log statement (e.g., <code>" - DB CALL: list_tables"</code>).</p>
+            </li>
+            <li>
+              <p><strong>Test each function</strong> to confirm correct behavior (e.g., print outputs).</p>
+            </li>
+          </ol>
+          <p><strong>Deliverables:</strong> Python code with docstrings and type hints, plus demonstration cells showing the functions in action.</p>
+        </section>
+      
+        <section>
+          <h3>Section 3: Integrating Functions with an LLM (20 points)</h3>
+          <ol>
+            <li>
+              <p><strong>Configure your model</strong> to use the three functions. </p>
+                <p><strong>Write a system instruction</strong> that explains what the database represents and how to use the functions, 
+                For example:</p>
+<pre><code>tools = [list_tables, describe_table, execute_query]
+model = genai.GenerativeModel("models/gemini-1.5-pro-latest", tools=tools, system_instruction=instruction)</code></pre>
+            </li>
+            <li>
+              <p><strong>Start a chat session</strong> with <em>automatic function calling</em> enabled.</p>
+            </li>
+          </ol>
+          <p><strong>Deliverables:</strong> Your code snippet showing the model initialization and system instruction. Demonstrate that the chat session is configured.</p>
+        </section>
+      
+        <section>
+          <h3>Section 4: Interactive Demo (Queries &amp; Responses) (20 points)</h3>
+          <ol>
+            <li>
+              <p><strong>Ask your chat model a few questions</strong> related to your database scenario (e.g., “Which item is most expensive on the menu?”).</p>
+            </li>
+            <li>
+              <p><strong>Show the model's responses</strong>, ensuring it calls the relevant function(s) automatically and returns a natural language answer.</p>
+            </li>
+            <li>
+              <p><strong>Print out or log the conversation history</strong> to show function calls and final responses.</p>
+            </li>
+          </ol>
+          <p><strong>Deliverables:</strong> Code cells with queries and outputs, plus a conversation history log.</p>
+        </section>
+      
+        <section>
+          <h3>Section 5: Reflection (15 points)</h3>
+          <p>Write a brief reflection (1–2 paragraphs):</p>
+          <ol>
+            <li>Explain what you learned about function calling with LLMs.</li>
+            <li>Discuss any challenges you faced (e.g., SQL errors, data mismatches).</li>
+            <li>Reflect on ethical/security considerations (e.g., dropping tables, malicious prompts).</li>
+          </ol>
+          
+        </section>
+        <section>
+            <h3>Code readibility and Citation (5 points)</h3>
+            <p>Provide all external cittaion you have consulted</p>
+        <section>
+          <h3>Submission Instructions</h3>
+          <ol>
+            <li>Submit your <code>.ipynb</code> file, showing all code cells run and outputs included.</li>
+            <li>Include your reflection in the same notebook or as a separate document.</li>
+            <li>Your final grade out of 100 will reflect completeness, correctness, clarity, and reflection.</li>
+          </ol>
+        </section>
+      
+        <section>
+          <h3>Additional Resources</h3>
+          <ul>
+            <li><a href="https://github.com/google-gemini/cookbook/blob/main/quickstarts/Function_calling.ipynb">Function Calling Cookbook (Gemini-specific)</a></li>
+            <li><a href="https://www.sqlite.org/docs.html">SQLite Documentation</a></li>
+            <li><a href="https://sqlbolt.com/">SQLBolt</a> (Quick tutorial on SQL)</li>
+            <li>Review the sample notebook for reference</li>
+          </ul>
+        </section>
+       
+  <div>
+        <ul>
+            <li>Creating Database (20 Points)</li>
+            <li>Defining Functions (20 Points)</li>
+            <li>Integrating Functions with an LLM (20 Points)</li>
+            <li>Query and Responses (20 Points)</li>
+            <li>Reflection (15 Points)</li>
+            <li>Code Readability and Citations (5 Points)</li>
+        </ul>
+      </div>
+
+</body>
+</html>
